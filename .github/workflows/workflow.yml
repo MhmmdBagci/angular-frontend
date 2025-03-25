@@ -12,9 +12,9 @@ jobs:
       - name: Install
         run: npm install
 
-      - name: Set OpenSSL legacy provider (if needed)
-        run: export NODE_OPTIONS=--openssl-legacy-provider
-        
+      - name: update
+        run: npm update
+
       - name: Test
         run: npm test
 
