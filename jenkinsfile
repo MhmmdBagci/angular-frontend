@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Github Code') {
+            steps {
+                git 'https://github.com/MhmmdBagci/angular-frontend.git'
+            }
+        }
+        stage('Build Project') {
+            steps {
+                sh 'npm install -g npm@latest'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deployment erfolgreich ausgeführt'
+                sh '7z a -t7z ./angular-frontend.git'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning workspace'
+            sh 'rm -rf ./*'
+        }
+        success {
+            echo 'Pipeline erfolgreich abgeschlossen.'
+        }
+        failure {
+            echo 'Pipeline fehlgeschlagen.'
+        }
+    }
+}
