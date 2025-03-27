@@ -1,40 +1,40 @@
 pipeline {
     agent any
-
+    environment {
+        NODE_OPTIONS = '--openssl-legacy-provider'
+    }
     stages {
         stage('Github Code') {
             steps {
                 git 'https://github.com/MhmmdBagci/angular-frontend.git'
             }
         }
-        stage('Build Project') {
+       stage('Install') {
             steps {
-                sh 'npm install -g npm@latest'
+                sh 'npm install'
             }
         }
-        stage('Test') {
+        stage('Build') {
             steps {
-                sh 'npm test'
+                sh 'npm run build'
             }
         }
-        stage('Deploy') {
+        stage('Speichern/Archivieren') {
             steps {
-                echo 'Deployment erfolgreich ausgeführt'
-                sh '7z a -t7z ./angular-frontend.git'
+                sh '7z a angular-frontend.7z dist/*'
             }
         }
     }
-
     post {
         always {
-            echo 'Cleaning workspace'
+            echo 'Pipeline abgeschlossen'
             sh 'rm -rf ./*'
         }
         success {
-            echo 'Pipeline erfolgreich abgeschlossen.'
+            echo 'Pipeline war erfolgreich!'
         }
         failure {
-            echo 'Pipeline fehlgeschlagen.'
+            echo 'Pipeline ist fehlgeschlagen.'
         }
     }
 }
