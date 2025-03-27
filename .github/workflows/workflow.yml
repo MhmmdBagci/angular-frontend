@@ -1,22 +1,21 @@
 name: CI/CD FRONTEND
 
 on:
-  push
+  push:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Set up Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
-      - name: Checkout repository
+      - name: repository
         uses: actions/checkout@v3
 
-      - name: Install dependencies
+      - name: Install
         run: npm install
 
       - name: Set OpenSSL legacy provider
@@ -28,15 +27,4 @@ jobs:
       - name: Deploy
         run: echo 'Frontend wurde erfolgreich deployt!'
 
-    post:
-      always:
-        - name: Build-Ergebnis anzeigen
-          run: echo 'Build abgeschlossen'
-
-      success:
-        - name: Erfolgreich
-          run: echo 'Build war erfolgreich!'
-
-      failure:
-        - name: Fehlgeschlagen
-          run: echo 'Build ist fehlgeschlagen.'
+    
