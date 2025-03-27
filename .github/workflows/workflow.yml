@@ -1,25 +1,42 @@
 name: CI/CD FRONTEND
 
 on:
-  push:
+  push
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Set up Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
-      - name: repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install
+      - name: Install dependencies
         run: npm install
 
       - name: Set OpenSSL legacy provider
         run: export NODE_OPTIONS=--openssl-legacy-provider
 
+      - name: Anwendung verpacken
+        run: 7z a angular-frontend.7z dist/*
+
       - name: Deploy
         run: echo 'Frontend wurde erfolgreich deployt!'
+
+    post:
+      always:
+        - name: Build-Ergebnis anzeigen
+          run: echo 'Build abgeschlossen'
+
+      success:
+        - name: Erfolgreich
+          run: echo 'Build war erfolgreich!'
+
+      failure:
+        - name: Fehlgeschlagen
+          run: echo 'Build ist fehlgeschlagen.'
