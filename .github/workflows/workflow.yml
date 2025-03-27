@@ -21,6 +21,9 @@ jobs:
       - name: Set OpenSSL legacy provider
         run: export NODE_OPTIONS=--openssl-legacy-provider
 
+      - name: Build Angular Application
+        run: npm run build --prod
+
       - name: Anwendung verpacken
         run: 7z a angular-frontend.7z dist/*
 
