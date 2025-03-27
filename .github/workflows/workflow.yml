@@ -1,3 +1,5 @@
+name: CI/CD FRONTEND
+
 on:
   push:
 
@@ -24,6 +26,3 @@ jobs:
 
       - name: Deploy
         run: echo 'Frontend wurde erfolgreich deployt!'
-
-      - name: Cleaning Workplace
-        run: rm -rf *
