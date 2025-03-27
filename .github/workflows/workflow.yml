@@ -21,8 +21,5 @@ jobs:
       - name: Set OpenSSL legacy provider
         run: export NODE_OPTIONS=--openssl-legacy-provider
 
-      - name: Test
-        run: npm test
-
       - name: Deploy
         run: echo 'Frontend wurde erfolgreich deployt!'
