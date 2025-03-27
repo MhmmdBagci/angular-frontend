@@ -1,7 +1,9 @@
 name: Frontend CI/CD
 
 on:
-  push
+  push:
+    branches:
+      - main  # Du kannst dies anpassen, je nachdem, auf welchem Branch du den Push auslösen möchtest
 
 jobs:
   build:
@@ -14,19 +16,33 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '16'  # Stelle sicher, dass du die richtige Version angibst, die du für dein Projekt benötigst
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          echo "Installing dependencies..."
+          npm install || { echo 'npm install failed'; exit 1; }  # Fehlerbehandlung bei npm install
 
       - name: Update Dependencies
-        run: npm update
+        run: |
+          echo "Updating dependencies..."
+          npm update || { echo 'npm update failed'; exit 1; }  # Fehlerbehandlung bei npm update
 
       - name: Run Tests
-        run: npm test
+        run: |
+          echo "Running tests..."
+          npm test || { echo 'npm test failed'; exit 1; }  # Fehlerbehandlung bei npm test
+
+      - name: Build the Project
+        run: |
+          echo "Building the project..."
+          npm run build || { echo 'npm run build failed'; exit 1; }  # Fehlerbehandlung beim Build
 
       - name: Deploy
-        run: echo 'Frontend wurde erfolgreich deployt!'
+        run: |
+          echo "Frontend wurde erfolgreich deployt!"
 
       - name: Clean Workspace
-        run: rm -rf *
+        run: |
+          echo "Cleaning workspace..."
+          rm -rf * || { echo 'Failed to clean workspace'; exit 1; }  # Fehlerbehandlung bei Workspace-Reinigung
