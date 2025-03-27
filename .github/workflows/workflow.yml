@@ -1,9 +1,7 @@
 name: Frontend CI/CD
 
 on:
-  push:
-    branches:
-      - main  # Du kannst dies anpassen, je nachdem, auf welchem Branch du den Push auslösen möchtest
+  push
 
 jobs:
   build:
