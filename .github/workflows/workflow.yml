@@ -8,41 +8,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
+      - name: Set OpenSSL legacy provider
+        run: export NODE_OPTIONS=--openssl-legacy-provider
+
+      - name: repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'  # Stelle sicher, dass du die richtige Version angibst, die du für dein Projekt benötigst
+      - name: Install
+        run: npm install
 
-      - name: Install Dependencies
-        run: |
-          echo "Installing dependencies..."
-          npm install || { echo 'npm install failed'; exit 1; }  # Fehlerbehandlung bei npm install
-
-      - name: Update Dependencies
-        run: |
-          echo "Updating dependencies..."
-          npm update || { echo 'npm update failed'; exit 1; }  # Fehlerbehandlung bei npm update
-
-      - name: Run Tests
-        run: |
-          echo "Running tests..."
-          npm test || { echo 'npm test failed'; exit 1; }  # Fehlerbehandlung bei npm test
-
-      - name: Build the Project
-        run: |
-          echo "Building the project..."
-          npm run build || { echo 'npm run build failed'; exit 1; }  # Fehlerbehandlung beim Build
+      - name: Test
+        run: npm test
 
       - name: Deploy
-        run: |
-          echo "Frontend wurde erfolgreich deployt!"
+        run: echo 'Frontend wurde erfolgreich deployt!'
 
-      - name: Clean Workspace
-        run: |
-          echo "Cleaning workspace..."
-          rm -rf * || { echo 'Failed to clean workspace'; exit 1; }  # Fehlerbehandlung bei Workspace-Reinigung
+      - name: Cleaning Workplace
+        run: rm -rf *
+
